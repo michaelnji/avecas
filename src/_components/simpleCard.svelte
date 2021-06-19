@@ -3,10 +3,10 @@
   export let tags, title, desc, date;
 </script>
 
-<div class="card shadow my-3">
+<div class="card border m-3">
   <div class="card-body">
     {#if date}
-      <span class="my-3 text-gray-400">{date}</span>
+      <span class="my-3 text-gray-400 font-semibold">{date}</span>
     {/if}
     <h2 class="card-title font-bold text-primary-focus">{title}</h2>
     <p>{desc}</p>

@@ -1,9 +1,9 @@
 <script>
   export let type, closable, size, inButton, outlined;
-  let margin = inButton ? "ml-3" : "";
+  let margin = inButton ? "ml-2" : "";
   let outline = outlined ? "badge-outline" : "";
   let classType =
-    "my-2 badge badge-" +
+    "my-1 badge badge-" +
     type +
     " badge-" +
     size +
