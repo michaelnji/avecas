@@ -33,7 +33,7 @@
 <div data-tip={themes[c].name} class="tooltip tooltip-bottom">
   <button
     tabindex="0"
-    class="btn btn-outline mr-3 hidden md:inline-block"
+    class="btn  btn-outline mr-3 hidden sm:inline-block"
     on:click={changeTheme}
   >
     <Icon name={themes[c].icon} />

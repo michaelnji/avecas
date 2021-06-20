@@ -3,7 +3,7 @@
   import Icon from "./icon.svelte";
   let activeTab, closedClass;
   closedClass =
-    "w-screen h-screen hero-overlay fixed top-0 grid place-items-center z-50 hidden";
+    "w-screen h-screen hero-overlay md:fixed top-0 grid place-items-center z-50 hidden";
 
   activeTab = 0;
   function tabbed() {
@@ -18,17 +18,22 @@
   }
   function openEditor() {
     closedClass =
-      "w-screen h-screen hero-overlay fixed top-0 grid place-items-center z-50";
+      "w-screen h-screen hero-overlay md:fixed top-0 grid place-items-center z-50";
   }
 </script>
 
-<button
-  class="btn btn-primary shadow-lg btn-lg btn-circle fixed bottom-14 left-5 z-10"
-  on:click={openEditor}><Icon name="flag" /></button
+<div
+  class="tooltip tooltip-right fixed bottom-14 left-5 z-10"
+  data-tip="add new entry"
 >
+  <button
+    class="btn btn-primary shadow-lg btn-lg btn-circle "
+    on:click={openEditor}><Icon name="flag" /></button
+  >
+</div>
 <div class={closedClass}>
   <div
-    class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto overflow-hidden"
+    class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto z-50"
   >
     <button
       class="btn absolute top-3 right-3 btn-ghost btn-sm "
