@@ -1,13 +1,13 @@
 <script>
   import { Router } from "@roxi/routify";
   import { routes } from "../.routify/routes";
-  // import Serviceworker from "./Serviceworker.svelte";
-  // import "boxicons";
+  import Serviceworker from "./Serviceworker.svelte";
 </script>
 
-<main data-theme="desolate" class="overflow-hidden"><Router {routes} /></main>
+<div class="overflow-hidden"><Router {routes} /></div>
 
-<!-- <Serviceworker /> -->
+<Serviceworker />
+
 <style global>
   @tailwind base;
   @tailwind components;

@@ -24,8 +24,8 @@ module.exports = {
     themes: [
       {
         desolate: {
-          primary: "#570df8",
-          "primary-focus": "#4506cb",
+          primary: "#5c7cfa",
+          "primary-focus": "#4263eb",
           "primary-content": "#ffffff",
           secondary: "#00f05c",
           "secondary-focus": "#16bd00",
@@ -50,8 +50,11 @@ module.exports = {
       "dracula",
       "lofi",
       "halloween",
-      "dark",
+      "corporate",
+      "wireframe",
+      "emerald",
       "bumblebee",
+      "valentine",
       "cupcake", // and some pre-defined theme
     ],
   },

@@ -12,14 +12,14 @@
       text: "10009",
     },
     {
-      type: "error",
+      type: "success",
       text: "default",
     },
     {
       text: "10",
     },
     {
-      type: "error",
+      type: "warning",
       text: "sulphur",
     },
   ];

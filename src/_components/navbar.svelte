@@ -1,4 +1,5 @@
 <script>
+  import Icon from "./icon.svelte";
   import { url, isActive } from "@roxi/routify";
 </script>
 
@@ -46,21 +47,8 @@
     </li>
     <li class:bordered={$isActive("/Entries")}>
       <a href={$url("Entries")}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="sm:h-6 sm:w-6 h-4 w-4 mr-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-          />
-        </svg>
-        <b class="hidden md:inline"> Add Entry</b>
+        <Icon name="flag" />
+        <b class="hidden ml-2 md:inline">Entries</b>
       </a>
     </li>
     <li class:bordered={$isActive("/Notifications")}>
