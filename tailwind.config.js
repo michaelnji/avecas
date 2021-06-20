@@ -42,15 +42,17 @@ module.exports = {
           "base-content": "#1f2937",
           info: "#2094f3",
           success: "#51cf66",
-          warning: " #ff922b",
-          error: " #fa5252",
+          warning: "#ff922b",
+          error: "#fa5252",
         },
       },
       "forest",
       "dracula",
       "lofi",
       "halloween",
-      "dark", // and some pre-defined theme
+      "dark",
+      "bumblebee",
+      "cupcake", // and some pre-defined theme
     ],
   },
 };

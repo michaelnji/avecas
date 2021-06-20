@@ -2,6 +2,7 @@ import svelte from "rollup-plugin-svelte-hot";
 import Hmr from "rollup-plugin-hot";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+// import json from "@rollup/plugin-json";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import { copySync, removeSync } from "fs-extra";
@@ -65,6 +66,7 @@ export default {
         }),
       ],
     }),
+    // json(),
 
     // resolve matching modules from current working directory
     resolve({
