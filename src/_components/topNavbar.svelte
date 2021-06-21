@@ -1,5 +1,5 @@
 <script>
-  import Calendar from "./calendar.svelte";
+  import Calendar from "./my-calendar.svelte";
   import ThemeToggle from "./themeToggle.svelte";
   import { createEventDispatcher } from "svelte";
 

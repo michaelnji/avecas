@@ -8,3 +8,4 @@ src/tmp/
 assets/build
 .vercel
 *.sw
+/.vscode/*

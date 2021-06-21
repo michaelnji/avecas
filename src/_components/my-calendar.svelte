@@ -4,7 +4,7 @@
 
 <ul class="menu horizontal">
   <h3
-    class="text-base-content md:border md:p-4 rounded-box text-xs md:text-xl font-bold"
+    class="text-base-content md:shadow- md:p-4 rounded-box sm:text-md text-xs md:text-lg font-bold"
   >
     {tf.today()}
   </h3>

@@ -18,7 +18,7 @@
   }
   function openEditor() {
     closedClass =
-      "w-screen h-screen hero-overlay md:fixed top-0 grid place-items-center z-50";
+      "w-screen h-screen hero-overlay overflow-scroll fixed  top-1 grid place-items-center z-50 mb-28";
   }
 </script>
 
