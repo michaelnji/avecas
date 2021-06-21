@@ -11,7 +11,7 @@
   }
 </script>
 
-<div class="card border m-3 p-4 ">
+<div class="card shadow bg-base-100 m-3 p-4 ">
   <div class="form-control">
     <label class="cursor-pointer label mr-3" for={todo}>
       <h3 class={"text-2xl sm:text-xl font-bold mr-2 " + priorityClass}>

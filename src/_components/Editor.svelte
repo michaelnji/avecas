@@ -28,10 +28,10 @@
 >
   <button
     class="btn btn-primary shadow-lg btn-lg btn-circle "
-    on:click={openEditor}><Icon name="flag" /></button
+    on:click={openEditor}><Icon name="plus" /></button
   >
 </div>
-<div class={closedClass}>
+<div class={closedClass} transition:fade>
   <div
     class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto z-50"
   >
@@ -57,7 +57,7 @@
         </div>
       </div>
       {#if activeTab === 0}
-        <div in:fade out:fade>
+        <div>
           <h1 class="font-bold text-3xl py-5 ">Add Entry</h1>
           <div class="form-control">
             <label class="label">
@@ -95,7 +95,7 @@
           <button class="btn btn-block btn-primary mt-8">Save entry</button>
         </div>
       {:else}
-        <div in:fade out:fly>
+        <div>
           <h1 class="font-bold text-3xl py-5 ">Add Todo</h1>
           <div class="form-control">
             <label class="label">

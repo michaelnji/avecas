@@ -47,7 +47,7 @@
     </li>
     <li class:bordered={$isActive("/Entries")}>
       <a href={$url("Entries")}>
-        <Icon name="flag" />
+        <Icon name="archive" />
         <b class="hidden ml-2 md:inline">Entries</b>
       </a>
     </li>

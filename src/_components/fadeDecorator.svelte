@@ -1,7 +1,7 @@
 <script>
-  import { scale, fly } from "svelte/transition";
+  import { fade } from "svelte/transition";
 </script>
 
-<div in:scale out:fly>
+<div transition:fade>
   <slot />
 </div>

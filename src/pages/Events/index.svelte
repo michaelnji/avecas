@@ -1,5 +1,4 @@
 <script>
-  import Icon from "./../../_components/icon.svelte";
   import EmptyEvents from "./../../_components/EmptyEvents.svelte";
 </script>
 

@@ -64,9 +64,11 @@
 <div data-theme={themes[b].name}>
   <TopNavbar on:requestTheme={requestThemeHandler} />
   <div
-    class="lg:pt-36 pt-24 pb-14 bg-base-100 text-base-content w-full min-h-screen "
+    class="lg:pt-36 pt-24 pb-14 bg-base-200 text-base-content w-full min-h-screen "
   >
-    <slot decorator={FadeDecorator} />
+    <div on:requestTheme={requestThemeHandler}>
+      <slot decorator={FadeDecorator} />
+    </div>
   </div>
 
   <Navbar />

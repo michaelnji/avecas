@@ -14,7 +14,9 @@
 >
   <h1 class="logo sm:text-3xl text-2xl font-extrabold text-primary">Avecas</h1>
   <div>
-    <ThemeToggle on:changeTheme={pushEvent} />
+    <div class="hidden sm:inline-block">
+      <ThemeToggle on:changeTheme={pushEvent} />
+    </div>
 
     <Calendar />
   </div>

@@ -3,7 +3,7 @@
   export let tags, title, desc, date;
 </script>
 
-<div class="card border m-3 bg-base-100">
+<div class="card shadow shadow-base-200 m-3 bg-base-100">
   <div class="card-body">
     {#if date}
       <span class="my-3 text-base-content text-opacity-50 font-semibold"
