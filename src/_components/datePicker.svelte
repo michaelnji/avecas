@@ -15,6 +15,7 @@
 
 <style lang="scss">
     @use '../static/css/theme.scss';
+    @import "../../node_modules/attractions/_variables.scss";
     .date-picker {
         $main: red;
     }

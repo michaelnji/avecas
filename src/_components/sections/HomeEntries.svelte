@@ -1,55 +1,24 @@
 <script>
-  import SimpleCard from "../simpleCard.svelte";
-  let tag = [
-    {
-      text: "10",
-    },
-    {
-      type: "error",
-      text: "201",
-    },
-    {
-      text: "10009",
-    },
-    {
-      type: "success",
-      text: "default",
-    },
-    {
-      text: "10",
-    },
-    {
-      type: "warning",
-      text: "sulphur",
-    },
-  ];
+    import Empty from "./../Empty.svelte";
+    import SimpleCard from "../simpleCard.svelte";
+    export let entries;
 </script>
 
-<div class="artboard">
-  <div class="grid lg:grid-cols-2 grid-cols-1">
-    <SimpleCard
-      title="lorem ipsum dolor"
-      desc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis quis facilis vel, tempora tenetur"
-      tags={tag}
-      date="Saturday 10 August, 2021"
-    />
-    <SimpleCard
-      title="lorem ipsum dolor"
-      desc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis quis facilis vel, tempora tenetur"
-      tags={tag}
-      date="Saturday 10 August, 2021"
-    />
-    <SimpleCard
-      title="lorem ipsum dolor"
-      desc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis quis facilis vel, tempora tenetur"
-      tags={tag}
-      date="Saturday 10 August, 2021"
-    />
-    <SimpleCard
-      title="lorem ipsum dolor"
-      desc="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis quis facilis vel, tempora tenetur"
-      tags={tag}
-      date="Saturday 10 August, 2021"
-    />
-  </div>
-</div>
+{#if entries.length !== 0}
+    <div class="artboard">
+        <div class="grid lg:grid-cols-2 grid-cols-1">
+            {#each entries as entry}
+                <SimpleCard
+                    title={entry.title}
+                    desc={entry.desc}
+                    tags={entry.tags}
+                    date={entry.date}
+                    mood={entry.mood}
+                />
+            {/each}
+        </div>
+    </div>
+{:else}
+    <h1 class="text-3xl mt-3 font-semibold text-opacity-50">No New Entries</h1>
+    <Empty />
+{/if}
