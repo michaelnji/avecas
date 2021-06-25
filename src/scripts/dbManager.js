@@ -3,9 +3,9 @@ function getOrSetItem(key, value = "") {
     if (db.getItem(key) == null) {
         db.setItem(key, JSON.stringify(value));
     } else {
-        return db.getItem(key);
+        return JSON.parse(db.getItem(key));
     }
-    return key;
+    return value;
 }
 function getItemValue(key) {
     if (db.getItem(key) !== null) {
@@ -16,7 +16,7 @@ function getItemValue(key) {
 function setItemValue(key, value = "") {
     if (key !== null) {
         db.setItem(key, JSON.stringify(value));
-        return key;
+        return value;
     } else return null;
 }
 function clearDB() {
