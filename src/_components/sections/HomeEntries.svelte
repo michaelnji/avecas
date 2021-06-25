@@ -4,7 +4,7 @@
     export let entries;
 </script>
 
-{#if entries.length !== 0}
+{#if entries.length > 0}
     <div class="artboard">
         <div class="grid lg:grid-cols-2 grid-cols-1">
             {#each entries as entry}

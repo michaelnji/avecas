@@ -1,15 +1,32 @@
 <script>
+    import DatePicker from "./datePicker.svelte";
+    import { v4 as uuidv4 } from "uuid";
     import { fly, fade } from "svelte/transition";
     import Icon from "./icon.svelte";
     import entries from "../store/entries";
     import { onDestroy, onMount } from "svelte";
     import timeFunctions from "../scripts/timeFunctions";
     import dbM from "../scripts/dbManager";
-    let activeTab, closedClass, Entries, tags, title, desc, date, mood;
+    import todos from "../store/todos";
+    export let tab;
+    let activeTab,
+        closedClass,
+        Entries,
+        Todos,
+        tags,
+        title,
+        desc,
+        todoDate,
+        todo,
+        todoImportance,
+        todoTags,
+        mood,
+        todoPriority,
+        uniq_id;
     closedClass =
         "w-screen h-screen hero-overlay md:fixed top-0 grid place-items-center z-50 hidden";
     mood = "😍";
-    activeTab = 0;
+    activeTab = tab;
     function tabbed() {
         if (activeTab == 0) {
             activeTab = 1;
@@ -76,11 +93,25 @@
             result.push(newTag);
         }
         // result.reverse().pop();
-        console.log(result);
         return result;
+    }
+    /* 
+ format date sent up from datePicker.svelte
+    */
+    function setDate(e) {
+        let receivedDate = e.detail;
+        let d = new Date(receivedDate);
+        let dayNum = d.getDate();
+        let day = d.getDay();
+        let year = d.getUTCFullYear();
+        let month = d.getUTCMonth();
+        todoDate = `${timeFunctions.returnDay(
+            day
+        )}, ${dayNum} ${timeFunctions.returnMonth(month)} ${year}`;
     }
     function addEntry() {
         date = timeFunctions.today();
+        uniq_id = uuidv4();
         entries.update((value) => {
             return [
                 ...Entries,
@@ -90,11 +121,36 @@
                     desc: desc,
                     tags: formatTags(tags),
                     mood: mood,
+                    id: uniq_id,
                 },
             ];
         });
+
         dbM.setItemValue("AVECAS_ENTRIES", Entries);
         title, desc, (tags = "");
+
+        closeEditor();
+    }
+    function addTodo() {
+        uniq_id = uuidv4();
+        todos.update((value) => {
+            return [
+                ...Todos,
+                {
+                    date: todoDate,
+                    todo: todo,
+                    tags: todoTags ? formatTags(todoTags) : false,
+                    priority: todoPriority ? todoPriority : "",
+                    isChecked: false,
+                    id: uniq_id,
+                },
+            ];
+        });
+
+        dbM.setItemValue("AVECAS_TODOS", Todos);
+        todo = "";
+        todoTags = "";
+        todoDate = "";
 
         closeEditor();
     }
@@ -102,14 +158,21 @@
     const unsubscribe = entries.subscribe((value) => {
         Entries = value;
     });
+    const todoUnsubscribe = todos.subscribe((value) => {
+        Todos = value;
+    });
     onMount(() => {
         // dbM.getOrSetItem("AVECAS_ENTRIES", Entries);
         entries.update((value) => {
             return dbM.getItemValue("AVECAS_ENTRIES");
         });
+        todos.update((value) => {
+            return dbM.getItemValue("AVECAS_TODOS");
+        });
     });
     onDestroy(() => {
         unsubscribe;
+        todoUnsubscribe;
     });
 </script>
 
@@ -122,9 +185,9 @@
         on:click={openEditor}><Icon name="plus" /></button
     >
 </div>
-<div class={closedClass} transition:fade>
+<div class={closedClass} out:fade>
     <div
-        class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto z-50"
+        class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto z-50 overflow-visible"
     >
         <button
             class="btn absolute top-3 right-3 btn-ghost btn-sm "
@@ -192,6 +255,12 @@
                                             on:click={changeMood}>😊</button
                                         >
                                     </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
+                                            on:click={changeMood}>😂</button
+                                        >
+                                    </li>
 
                                     <li>
                                         <button
@@ -208,6 +277,12 @@
                                     <li>
                                         <button
                                             class="btn btn-ghost"
+                                            on:click={changeMood}>🙁</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
                                             on:click={changeMood}>😡</button
                                         >
                                     </li>
@@ -215,6 +290,30 @@
                                         <button
                                             class="btn btn-ghost"
                                             on:click={changeMood}>😞</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
+                                            on:click={changeMood}>💩</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
+                                            on:click={changeMood}>😴</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
+                                            on:click={changeMood}>👨🏾‍💻</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
+                                            on:click={changeMood}>✌🏾</button
                                         >
                                     </li>
                                 </ul>
@@ -238,18 +337,36 @@
                 <div>
                     <h1 class="font-bold text-3xl py-5 ">Add Todo</h1>
                     <div class="form-control">
-                        <label class="label">
-                            <span class="label-text text-primary">Title</span>
+                        <label class="label" for="todo">
+                            <span class="label-text text-primary">Todo</span>
                         </label>
                         <input
                             placeholder="Clean Windows of basement"
+                            bind:value={todo}
                             class="input input-bordered"
                             type="text"
                         />
                     </div>
-
-                    <div class="form-control mt-4">
-                        <label class="label">
+                    <div class="form-control mt-4 sm:mt-0">
+                        <label class="label" for="date">
+                            <span class="label-text text-primary">Date</span>
+                        </label>
+                        {#if window.innerWidth > 900 && window.innerWidth < 1400}
+                            <DatePicker
+                                top={false}
+                                right={true}
+                                on:chooseDate={setDate}
+                            />
+                        {:else}
+                            <DatePicker
+                                right={true}
+                                top={false}
+                                on:chooseDate={setDate}
+                            />
+                        {/if}
+                    </div>
+                    <!-- <div class="form-control mt-4">
+                        <label class="label" for="description">
                             <span class="label-text text-primary"
                                 >description</span
                             >
@@ -258,23 +375,34 @@
                             class="textarea h-36 textarea-bordered"
                             placeholder="Anything to add??"
                         />
-                    </div>
+                    </div> -->
 
                     <div class="form-control w-full mt-4">
-                        <label class="label">
+                        <label class="label" for="tags">
                             <span class="label-text text-primary">tags</span>
                         </label>
                         <input
                             type="text"
+                            bind:value={todoTags}
                             placeholder="@tags @happy @important"
                             class="input input-bordered"
                         />
                     </div>
-                    <button class="btn btn-block btn-primary mt-8"
-                        >Add Todo</button
+                    <button
+                        class="btn btn-block btn-primary mt-8"
+                        on:click={addTodo}>Add Todo</button
                     >
                 </div>
             {/if}
         </div>
     </div>
 </div>
+
+<style lang="scss">
+    @use '../static/css/theme.scss';
+    .date-picker {
+        @apply bg-base-100;
+        --tw-bg-opacity: 1;
+        $textfield-bg: transparent;
+    }
+</style>

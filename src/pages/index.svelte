@@ -6,20 +6,28 @@
     import { metatags } from "@roxi/routify";
     import HomeEntries from "../_components/sections/HomeEntries.svelte";
     import entries from "../store/entries";
+    import todos from "../store/todos";
     import { onDestroy, onMount } from "svelte";
     import dbManager from "../scripts/dbManager";
-    let Entries, unsubscribe;
+    let Entries, unsubscribe, todoUnsubscribe, Todos;
+
     onMount(() => {
         entries.update((value) => {
-            return dbManager.getItemValue("AVECAS_ENTRIES");
+            return dbManager.getOrSetItem("AVECAS_ENTRIES", []);
+        });
+        todos.update((value) => {
+            return dbManager.getOrSetItem("AVECAS_TODOS", []);
         });
         unsubscribe = entries.subscribe((value) => {
             Entries = value;
         });
-        console.log(Entries);
+        todoUnsubscribe = todos.subscribe((value) => {
+            Todos = value;
+        });
     });
     onDestroy(() => {
         unsubscribe;
+        todoUnsubscribe;
     });
     metatags.title = "Avecas";
     metatags.description = "A personalised diary App";
@@ -31,7 +39,9 @@
         <div class="w-full md:w-11/12 md:mx-auto lg:w-6/12">
             <h1 class="font-extrabold text-4xl mb-3 text-base-content">
                 Entries {#if Entries}
-                    <Badge size="md" type="info">{Entries.length} new</Badge>
+                    <Badge size="md" type="info" closable={false}
+                        >{Entries.length} new</Badge
+                    >
                 {/if}
             </h1>
             {#if Entries}
@@ -41,9 +51,15 @@
         <div class="w-full md:w-11/12 md:mx-auto lg:w-5/12 my-12 lg:my-0">
             <div class="mb-7">
                 <h1 class="font-extrabold text-4xl mb-3">
-                    TODOS <Badge size="md" type="success">1 pending</Badge>
+                    TODOS {#if Todos}
+                        <Badge size="md" type="info" closable={false}
+                            >{Todos.filter((e)=>e.isChecked !== true).length} pending</Badge
+                        >
+                    {/if}
                 </h1>
-                <HomeTodoEntries />
+                {#if Todos}
+                    <HomeTodoEntries todos={Todos} />
+                {/if}
             </div>
             <div>
                 <h1 class="font-extrabold text-4xl mb-3">Stats</h1>

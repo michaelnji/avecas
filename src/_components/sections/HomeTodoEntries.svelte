@@ -1,34 +1,27 @@
 <script>
-  import TodoCard from "./../todoCard.svelte";
-  let tag = [
-    {
-      text: "10",
-    },
-    {
-      type: "error",
-      text: "201",
-    },
-    {
-      text: "10009",
-    },
-    {
-      type: "error",
-      text: "default",
-    },
-    {
-      text: "10",
-    },
-    {
-      type: "error",
-      text: "sulphur",
-    },
-  ];
+    import EmptyNotification from "./../EmptyNotification.svelte";
+    import TodoCard from "./../todoCard.svelte";
+    export let todos;
 </script>
 
-<div class="artboard">
-  <div class="grid grid-cols-1">
-    <TodoCard todo="Take out the trash" tags={tag} priority="important" />
-    <TodoCard todo="Take Mummy home" tags={tag} priority="urgent" />
-    <TodoCard todo="Complete Avecas layout" isChecked />
-  </div>
-</div>
+{#if todos.length > 0}
+    <div class="artboard">
+        <div class="grid grid-cols-1">
+            {#each todos as todo}
+                <TodoCard
+                    todo={todo.todo}
+                    tags={todo.tags}
+                    priority={todo.priority}
+                    isChecked={todo.isChecked}
+                    dueBefore={todo.date}
+                    id={todo.id}
+                />
+            {/each}
+        </div>
+    </div>
+{:else}
+    <h1 class="text-3xl mt-3 font-semibold text-opacity-50">
+        No Pending Tasks
+    </h1>
+    <EmptyNotification />
+{/if}

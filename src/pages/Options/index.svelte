@@ -4,6 +4,7 @@
     import { createEventDispatcher } from "svelte";
     import dbManager from "../../scripts/dbManager";
     import entries from "../../store/entries";
+    import todos from "../../store/todos";
     const dispatch = createEventDispatcher();
     function pushEvent() {
         dispatch("requestTheme");
@@ -13,6 +14,10 @@
         dbManager.setItemValue("AVECAS_ENTRIES", []);
         entries.update((value) => {
             return dbManager.getItemValue("AVECAS_ENTRIES");
+        });
+        dbManager.setItemValue("AVECAS_TODOS", []);
+        todos.update((value) => {
+            return dbManager.getItemValue("AVECAS_TODOS");
         });
     }
 </script>

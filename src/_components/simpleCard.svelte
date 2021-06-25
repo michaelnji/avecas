@@ -17,7 +17,9 @@
                 >{date}</span
             >
         {/if}
-        <h2 class="card-title font-bold text-primary-focus">{title}</h2>
+        <h2 class="card-title font-bold text-primary-focus truncate">
+            {title}
+        </h2>
         <p class="text-base-content text-opacity-60 truncate">{desc}</p>
         {#if tags}
             <div class="w-full mt-4 flex-wrap  flex justify-start items-center">
