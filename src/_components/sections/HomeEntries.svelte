@@ -13,7 +13,9 @@
                     desc={entry.desc}
                     tags={entry.tags}
                     date={entry.date}
+                    hideContent={true}
                     mood={entry.mood}
+                    id={entry.id}
                 />
             {/each}
         </div>

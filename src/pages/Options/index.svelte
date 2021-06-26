@@ -66,17 +66,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Theme(mobile only) -->
-            <div
-                class="card my-3 bg-base-100 max-h-max p-6 w-full sm:w-max md:hidden"
-            >
-                <h2 class="card-title text-2xl">Themes</h2>
-                <div
-                    class="menu items-start md:items-center md:justify-between justify-start"
-                >
-                    <ThemeToggle on:changeTheme={pushEvent} />
-                </div>
-            </div>
         </div>
         <!-- Stats -->
         <div class="card my-3 bg-base-100 p-6 w-full md:w-7/12 lg:w-max ">
