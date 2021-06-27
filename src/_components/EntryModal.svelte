@@ -6,6 +6,8 @@
     import timeFunctions from "../scripts/timeFunctions";
     import dbM from "../scripts/dbManager";
     import { getNotificationsContext } from "svelte-notifications";
+    import tp from "../scripts/tagsParser";
+
     export let id;
     const { addNotification } = getNotificationsContext();
     let closedClass,
@@ -28,67 +30,7 @@
     function closeEditor() {
         closedClass = false;
     }
-    function formatTags(val) {
-        let formatted = val.split("@");
-        let result = [];
-        for (let index = 0; index < formatted.length; index++) {
-            const tag = formatted[index].trim();
-            let newTag = {};
-            switch (tag) {
-                case "important":
-                    newTag = {
-                        text: tag,
-                        type: "error",
-                    };
-                    break;
-                case "bad":
-                    newTag = {
-                        text: tag,
-                        type: "error",
-                    };
-                    break;
-                case "happy":
-                    newTag = {
-                        text: tag,
-                        type: "success",
-                    };
-                    break;
-                case "feeling loved":
-                    newTag = {
-                        text: tag,
-                        type: "success",
-                    };
-                    break;
-                case "sad":
-                    newTag = {
-                        text: tag,
-                        type: "warning",
-                    };
-                    break;
 
-                default:
-                    newTag = {
-                        text: tag,
-                        type: "info",
-                    };
-                    break;
-            }
-            result.push(newTag);
-        }
-        // result.reverse().pop();
-        return result;
-    }
-    function arrayToString(val) {
-        let results = "";
-        val = val.reverse();
-        val.pop();
-        val = val.reverse();
-        val.forEach((el) => {
-            results = results + "@" + el.text + " ";
-        });
-
-        return results;
-    }
     function updateEntry() {
         newEntries = [];
         Entries.forEach((entry) => {
@@ -101,7 +43,7 @@
         newEntry = {
             title: Title,
             desc: Desc,
-            tags: formatTags(Tags),
+            tags: tp.formatTags(Tags),
             id: id,
             date: timeFunctions.today(),
             mood: Mood,
@@ -115,7 +57,7 @@
         closeEditor();
         addNotification({
             text: "Entry updated",
-            position: "top-center",
+            position: "bottom-right",
             type: "success",
             removeAfter: 2000,
         });
@@ -136,7 +78,7 @@
         closeEditor();
         addNotification({
             text: "Entry deleted",
-            position: "top-center",
+            position: "bottom-right",
             type: "danger",
             removeAfter: 2000,
         });
@@ -158,7 +100,7 @@
                 currentEntry = entry;
             }
         });
-        Tags = arrayToString(currentEntry.tags);
+        Tags = tp.arrayToString(currentEntry.tags);
         console.log(Tags);
         Mood = currentEntry.mood;
         Title = currentEntry.title;
@@ -169,7 +111,7 @@
     });
 </script>
 
-<div class="dropdown">
+<div class="dropdown dropdown-hover hover">
     <button class="btn btn-ghost">
         <Icon name="dots-horizontal" inButton />
     </button>

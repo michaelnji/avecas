@@ -85,7 +85,7 @@
         closeEditor();
         addNotification({
             text: "Entry Added",
-            position: "top-center",
+            position: "bottom-right",
             type: "success",
             removeAfter: 2000,
         });
@@ -114,7 +114,7 @@
         closeEditor();
         addNotification({
             text: "Todo Added",
-            position: "top-center",
+            position: "bottom-right",
             type: "success",
             removeAfter: 2000,
         });
@@ -152,7 +152,7 @@
 </div>
 {#if closedClass}
     <div
-        class="w-screen h-screen hero-overlay overflow-scroll fixed  top-1 grid place-items-center z-50 mb-28"
+        class="w-screen min-h-screen hero-overlay overflow-scroll fixed  top-1 grid place-items-center z-50 mb-28"
         transition:fade
     >
         <div

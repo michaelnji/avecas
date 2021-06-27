@@ -4,6 +4,8 @@
     import Badge from "./badge.svelte";
     import dbManager from "../scripts/dbManager";
     import { fade } from "svelte/transition";
+    import { getNotificationsContext } from "svelte-notifications";
+    const { addNotification } = getNotificationsContext();
     export let tags, todo, priority, isChecked, dueBefore, id;
     let priorityClass, Todos, todoUnsubscribe, currentTodo;
     todoUnsubscribe = todos.subscribe((value) => {
@@ -41,6 +43,12 @@
 
         todos.update((value) => {
             return dbManager.getItemValue("AVECAS_TODOS");
+        });
+        addNotification({
+            text: "success!",
+            position: "bottom-right",
+            type: "success",
+            removeAfter: 2000,
         });
     }
     if (priority) {

@@ -1,14 +1,10 @@
 <script>
-    import ThemeToggle from "./../../_components/themeToggle.svelte";
-    import Badge from "../../_components/badge.svelte";
-    import { createEventDispatcher } from "svelte";
     import dbManager from "../../scripts/dbManager";
     import entries from "../../store/entries";
     import todos from "../../store/todos";
-    const dispatch = createEventDispatcher();
-    function pushEvent() {
-        dispatch("requestTheme");
-    }
+    import { getNotificationsContext } from "svelte-notifications";
+    const { addNotification } = getNotificationsContext();
+
     function cdb() {
         // dbManager.clearDB();
         dbManager.setItemValue("AVECAS_ENTRIES", []);
@@ -18,6 +14,12 @@
         dbManager.setItemValue("AVECAS_TODOS", []);
         todos.update((value) => {
             return dbManager.getItemValue("AVECAS_TODOS");
+        });
+        addNotification({
+            text: "Database cleared",
+            position: "bottom-right",
+            type: "success",
+            removeAfter: 2000,
         });
     }
 </script>

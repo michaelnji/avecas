@@ -24,7 +24,4 @@
     ::-webkit-scrollbar-track {
         @apply bg-transparent;
     }
-    * {
-        @apply transition duration-200;
-    }
 </style>
