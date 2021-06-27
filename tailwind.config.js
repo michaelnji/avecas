@@ -4,7 +4,7 @@ module.exports = {
         enabled: !process.env.ROLLUP_WATCH,
         content: ["./public/index.html", "./src/**/*.svelte"],
         options: {
-            safelist: [/data-theme$/, /badge-*/],
+            safelist: [/data-theme$/, /badge-.bg-light-50*/],
             defaultExtractor: (content) => [
                 ...(content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []),
                 ...(content.match(/(?<=class:)[^=>\/\s]*/g) || []),
@@ -15,7 +15,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Lato", "sans-serif"],
+                sans: ["Poppins", "Lato", "sans-serif"],
             },
         },
     },
