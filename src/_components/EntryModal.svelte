@@ -5,7 +5,9 @@
     import { onDestroy, onMount } from "svelte";
     import timeFunctions from "../scripts/timeFunctions";
     import dbM from "../scripts/dbManager";
+    import { getNotificationsContext } from "svelte-notifications";
     export let id;
+    const { addNotification } = getNotificationsContext();
     let closedClass,
         Entries,
         Desc,
@@ -111,6 +113,12 @@
 
         dbM.setItemValue("AVECAS_ENTRIES", Entries);
         closeEditor();
+        addNotification({
+            text: "Entry updated",
+            position: "top-center",
+            type: "success",
+            removeAfter: 2000,
+        });
     }
     function deleteEntry() {
         newEntries = [];
@@ -126,6 +134,12 @@
 
         dbM.setItemValue("AVECAS_ENTRIES", Entries);
         closeEditor();
+        addNotification({
+            text: "Entry deleted",
+            position: "top-center",
+            type: "danger",
+            removeAfter: 2000,
+        });
     }
 
     const unsubscribe = entries.subscribe((value) => {

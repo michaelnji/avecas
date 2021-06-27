@@ -1,4 +1,5 @@
 <script>
+    import { isActive } from "@roxi/routify";
     import HomeTodoEntries from "./../../_components/sections/HomeTodoEntries.svelte";
     import EmptyNotification from "./../../_components/EmptyNotification.svelte";
     import { fade } from "svelte/transition";
@@ -27,6 +28,7 @@
     });
     onDestroy(() => {
         unsubscribe;
+        todoUnsubscribe;
     });
 </script>
 
@@ -75,7 +77,8 @@
         </div>
     </div>
 {:else if Todos}
-    <div class="mb-12" out:fade><HomeTodoEntries todos={Todos} /></div>
+    {#if $isActive("/Entries")}
+        <div class="mb-12" out:fade><HomeTodoEntries todos={Todos} /></div>{/if}
 {:else}
     <br />
 {/if}

@@ -8,7 +8,10 @@
     import timeFunctions from "../scripts/timeFunctions";
     import dbM from "../scripts/dbManager";
     import todos from "../store/todos";
+    import tp from "../scripts/tagsParser";
+    import { getNotificationsContext } from "svelte-notifications";
     export let tab;
+    const { addNotification } = getNotificationsContext();
     let activeTab,
         closedClass,
         Entries,
@@ -43,56 +46,7 @@
     function openEditor() {
         closedClass = true;
     }
-    function formatTags(val) {
-        let formatted = val.split("@");
-        let result = [];
-        for (let index = 0; index < formatted.length; index++) {
-            const tag = formatted[index].trim();
-            let newTag = {};
-            switch (tag) {
-                case "important":
-                    newTag = {
-                        text: tag,
-                        type: "error",
-                    };
-                    break;
-                case "bad":
-                    newTag = {
-                        text: tag,
-                        type: "error",
-                    };
-                    break;
-                case "happy":
-                    newTag = {
-                        text: tag,
-                        type: "success",
-                    };
-                    break;
-                case "feeling loved":
-                    newTag = {
-                        text: tag,
-                        type: "success",
-                    };
-                    break;
-                case "sad":
-                    newTag = {
-                        text: tag,
-                        type: "warning",
-                    };
-                    break;
 
-                default:
-                    newTag = {
-                        text: tag,
-                        type: "info",
-                    };
-                    break;
-            }
-            result.push(newTag);
-        }
-        // result.reverse().pop();
-        return result;
-    }
     /* 
  format date sent up from datePicker.svelte
     */
@@ -118,7 +72,7 @@
                     date: date,
                     title: title,
                     desc: desc,
-                    tags: formatTags(tags),
+                    tags: tp.formatTags(tags),
                     mood: mood,
                     id: uniq_id,
                 },
@@ -129,6 +83,12 @@
         title, desc, (tags = "");
 
         closeEditor();
+        addNotification({
+            text: "Entry Added",
+            position: "top-center",
+            type: "success",
+            removeAfter: 2000,
+        });
     }
     function addTodo() {
         uniq_id = uuidv4();
@@ -138,7 +98,7 @@
                 {
                     date: todoDate,
                     todo: todo,
-                    tags: todoTags ? formatTags(todoTags) : false,
+                    tags: todoTags ? tp.formatTags(todoTags) : false,
                     priority: todoPriority ? todoPriority : "",
                     isChecked: false,
                     id: uniq_id,
@@ -152,6 +112,12 @@
         todoDate = "";
 
         closeEditor();
+        addNotification({
+            text: "Todo Added",
+            position: "top-center",
+            type: "success",
+            removeAfter: 2000,
+        });
     }
 
     const unsubscribe = entries.subscribe((value) => {

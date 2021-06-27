@@ -1,11 +1,13 @@
 <script>
     import { Router } from "@roxi/routify";
     import { routes } from "../.routify/routes";
+    import Notifications from "svelte-notifications";
     import Serviceworker from "./Serviceworker.svelte";
 </script>
 
-<div class="overflow-hidden"><Router {routes} /></div>
-
+<Notifications>
+    <div class="overflow-hidden"><Router {routes} /></div>
+</Notifications>
 <Serviceworker />
 
 <style global>
