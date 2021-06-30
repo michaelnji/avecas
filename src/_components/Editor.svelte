@@ -67,7 +67,7 @@
         uniq_id = uuidv4();
         entries.update((value) => {
             return [
-                ...Entries,
+               
                 {
                     date: date,
                     title: title,
@@ -75,7 +75,7 @@
                     tags: tp.formatTags(tags),
                     mood: mood,
                     id: uniq_id,
-                },
+                }, ...Entries,
             ];
         });
 

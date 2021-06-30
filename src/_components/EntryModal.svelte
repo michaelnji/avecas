@@ -134,7 +134,7 @@
 </div>
 {#if closedClass}
     <div
-        class="w-screen h-screen hero-overlay left-0 fixed top-0 grid place-items-center z-50 "
+        class="w-screen h-screen hero-overlay left-0 fixed top-0 overflow-scroll grid place-items-center z-50 "
         transition:fade
     >
         <div
