@@ -9,6 +9,8 @@
     import { onDestroy, onMount } from "svelte";
     import dbManager from "../scripts/dbManager";
     import SimpleCard from "../_components/simpleCard.svelte";
+    import { fade, fly } from "svelte/transition";
+    import { flip } from "svelte/animate";
     let Entries, recentEntries, unsubscribe, todoUnsubscribe, Todos;
     unsubscribe = entries.subscribe((value) => {
         Entries = value;
@@ -36,11 +38,7 @@
 </script>
 
 {#if $isActive("./index")}
-    <main class=" px-6 py-8  w-screen relative">
-        <!-- <Alert type="success" closable>
-             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque
-             sapiente cupiditate veniam.</Alert
-         > -->
+    <main class=" px-2 py-8  w-full relative">
         <div class="flex flex-wrap w-full justify-between">
             <div class="w-full md:w-11/12 md:mx-auto lg:w-6/12">
                 <h1 class="font-extrabold text-4xl mb-3 text-base-content">
@@ -53,23 +51,31 @@
                 {#if Entries && Entries.length > 0}
                     <div class="artboard">
                         <div class="grid  grid-cols-1">
-                            {#each Entries as entry, i}
-                                {#if i < 3}
-                                    <SimpleCard
-                                        title={entry.title}
-                                        desc={entry.desc}
-                                        tags={entry.tags}
-                                        date={entry.date}
-                                        mood={entry.mood}
-                                        hideContent={false}
-                                        id={entry.id}
-                                    />
-                                {/if}
+                            {#each Entries as entry, i (entry.id)}
+                                <div
+                                    animate:flip={{ duration: 1000 }}
+                                    out:fly={{ x: -500, duration: 1000 }}
+                                >
+                                    {#if i < 3}
+                                        <SimpleCard
+                                            title={entry.title}
+                                            desc={entry.desc}
+                                            tags={entry.tags}
+                                            date={entry.date}
+                                            mood={entry.mood}
+                                            hideContent={false}
+                                            id={entry.id}
+                                        />
+                                    {/if}
+                                </div>
                             {/each}
                         </div>
                     </div>
                 {:else}
-                    <h1 class="text-3xl mt-3 font-semibold text-opacity-50">
+                    <h1
+                        class="text-3xl mt-3 font-semibold opacity opacity-50"
+                        style="opacity: 0.5;"
+                    >
                         No New Entries
                     </h1>
                     <Empty />

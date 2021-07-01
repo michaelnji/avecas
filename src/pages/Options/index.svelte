@@ -37,7 +37,9 @@
         <div class="card my-3 bg-base-100 p-6 w-full md:w-7/12 lg:w-max ">
             <h2 class="card-title text-2xl">Backup</h2>
             <div class="menu">
-                <div class=" py-3 flex items-center justify-start">
+                <div
+                    class="py-3 flex flex-col lg:flex-row items-start  md:justify-between justify-start mr-3 md:mr-0"
+                >
                     <button class="btn btn-sm   btn-accent mr-3"
                         >Create Backup</button
                     >

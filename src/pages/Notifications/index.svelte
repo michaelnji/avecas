@@ -3,7 +3,7 @@
   import EmptyNotification from "./../../_components/EmptyNotification.svelte";
 </script>
 
-<div class="w-full h-full">
+<div class=" h-full">
   <h1 class="text-3xl font-extrabold text-center text-opacity-10 mb-12">
     Wohoo! No new notifications
   </h1>

@@ -1,4 +1,6 @@
 <script>
+    import { flip } from "svelte/animate";
+    import Alert from "./alert.svelte";
     import DatePicker from "./datePicker.svelte";
     import { v4 as uuidv4 } from "uuid";
     import { fly, fade } from "svelte/transition";
@@ -13,6 +15,9 @@
     export let tab;
     const { addNotification } = getNotificationsContext();
     let activeTab,
+        errorOccured,
+        errorMsg,
+        alertType,
         closedClass,
         Entries,
         Todos,
@@ -28,6 +33,7 @@
         uniq_id;
     closedClass = false;
     mood = "😍";
+    errorOccured = false;
     activeTab = tab;
     function tabbed() {
         if (activeTab == 0) {
@@ -35,6 +41,14 @@
         } else {
             activeTab = 0;
         }
+    }
+    function showMsg(type, msg, time) {
+        errorMsg = msg;
+        alertType = type;
+        errorOccured = true;
+        setTimeout(() => {
+            errorOccured = false;
+        }, time);
     }
     function changeMood(e) {
         mood = e.target.innerText;
@@ -62,12 +76,15 @@
         )}, ${dayNum} ${timeFunctions.returnMonth(month)} ${year}`;
     }
     function addEntry() {
+        if (title === undefined || desc === undefined) {
+            showMsg("error", " Error, please fill in the fields", "2000");
+            return;
+        }
         let date;
         date = timeFunctions.today();
         uniq_id = uuidv4();
         entries.update((value) => {
             return [
-               
                 {
                     date: date,
                     title: title,
@@ -75,11 +92,13 @@
                     tags: tp.formatTags(tags),
                     mood: mood,
                     id: uniq_id,
-                }, ...Entries,
+                },
+                ...Entries,
             ];
         });
 
         dbM.setItemValue("AVECAS_ENTRIES", Entries);
+        // dbM.getOrSetItem("AVECAS_TOTAL_ENTRIES", Entries.length);
         title, desc, (tags = "");
 
         closeEditor();
@@ -91,6 +110,10 @@
         });
     }
     function addTodo() {
+        if (todo === undefined) {
+            showMsg("warning", " Error, please fill in th todo field", "2000");
+            return;
+        }
         uniq_id = uuidv4();
         todos.update((value) => {
             return [
@@ -152,21 +175,21 @@
 </div>
 {#if closedClass}
     <div
-        class="w-screen min-h-screen hero-overlay overflow-scroll fixed  top-1 grid place-items-center z-50 mb-28"
-        transition:fade
+        class="w-screen h-screen hero-overlay left-0 fixed top-0 overflow-scroll grid place-items-center z-50 "
+        transition:fly
     >
         <div
-            class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto z-50 overflow-visible"
+            class="border mockup-window border-base-300 w-11/12 lg:w-4/12  mx-auto bg-base-100 my-auto overflow-visible relative"
         >
             <button
                 class="btn absolute top-3 right-3 btn-ghost btn-sm "
                 on:click={closeEditor}><Icon name="x" /></button
             >
             <div class=" px-4  py-8 border-t border-base-300">
-                <div class="tabs">
+                <div class="tabs z-0">
                     <div
                         class:tab-active={activeTab === 0}
-                        class="tab tab-lifted"
+                        class="tab tab-lifted z-0"
                         on:click={tabbed}
                     >
                         Entry
@@ -179,6 +202,17 @@
                         Todo
                     </div>
                 </div>
+                {#if errorOccured}
+                    <div
+                        in:fly={{ x: -500 }}
+                        out:fly={{ x: 500 }}
+                        class="absolute top-20 right-8 w-full"
+                    >
+                        <Alert type={alertType} closable>
+                            {errorMsg}
+                        </Alert>
+                    </div>
+                {/if}
                 {#if activeTab === 0}
                     <div transition:fade>
                         <h1 class="font-bold text-3xl py-5 ">Add Entry</h1>
@@ -255,6 +289,24 @@
                                             <button
                                                 class="btn btn-ghost"
                                                 on:click={changeMood}>🙁</button
+                                            >
+                                        </li>
+                                        <li>
+                                            <button
+                                                class="btn btn-ghost"
+                                                on:click={changeMood}>🙄</button
+                                            >
+                                        </li>
+                                        <li>
+                                            <button
+                                                class="btn btn-ghost"
+                                                on:click={changeMood}>👀</button
+                                            >
+                                        </li>
+                                        <li>
+                                            <button
+                                                class="btn btn-ghost"
+                                                on:click={changeMood}>😱</button
                                             >
                                         </li>
                                         <li>
@@ -373,12 +425,3 @@
         </div>
     </div>
 {/if}
-
-<style lang="scss">
-    @use '../static/css/theme.scss';
-    .date-picker {
-        @apply bg-base-100;
-        --tw-bg-opacity: 1;
-        $textfield-bg: transparent;
-    }
-</style>

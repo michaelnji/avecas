@@ -16,7 +16,7 @@
 
 <div
     on:click|preventDefault|self={reveal}
-    class="card overflow-visible shadow-xl shadow-base-200 m-3 bg-base-100 text-xl transition-all duration-500 ease-in-out hover:animate-bounce animated cursor-pointer"
+    class="card overflow-visible shadow-xl shadow-base-200 m-3 bg-base-100 text-xl transition-all duration-500 ease-in-out  cursor-pointer"
 >
     <div>
         <EntryModal {id} />

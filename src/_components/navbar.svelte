@@ -7,7 +7,7 @@
   class=" w-screen lg:h-20 h-14 bg-base-100 text-base-content fixed bottom-0"
 >
   <ul
-    class="menu items-stretch justify-between w-full lg:px-8 md:px-4 px-2 h-full   horizontal rounded-t-md border"
+    class="menu items-stretch justify-between w-full lg:px-8 md:px-4 px-2 h-full   horizontal rounded-t-md border border-base-300"
   >
     <li class:bordered={$isActive("./index")}>
       <a href="/">

@@ -3,7 +3,7 @@
   let margin = inButton ? "ml-2" : "";
   let outline = outlined ? "badge-outline" : "";
   let classType =
-    "my-1 badge badge-" +
+    "my-1 badge badge-rounded text-xs border-0 badge-" +
     type +
     " badge-" +
     size +
@@ -35,3 +35,69 @@
   {/if}
   <slot />
 </div>
+<style>
+    
+.badge {
+  color: #a5b2bd;
+  background: #e6e9ec;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-top: 0.25rem;
+  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
+  margin-left: 4px;
+  margin-left: 0.25rem;
+  margin-right: 4px;
+  margin-right: 0.25rem;
+  padding-top: 8px;
+  padding-top: 0.5rem;
+  padding-bottom: 8px;
+  padding-bottom: 0.5rem;
+  padding-left: 8px;
+  padding-left: 0.5rem;
+  padding-right: 8px;
+  padding-right: 0.5rem;
+}
+
+.btn.badge {
+  border-radius: 9999px;
+}
+
+.badge-primary {
+  @apply text-primary bg-primary-content;
+
+}
+
+.badge-accent {
+ @apply text-accent bg-accent-content;
+}
+
+.badge-error {
+  @apply text-error bg-base-200;
+
+}
+
+.badge-success {
+   @apply text-success bg-base-200;
+
+}
+
+.badge-info {
+   @apply text-info bg-base-200;
+
+}
+
+.badge-warning {
+   @apply text-warning bg-base-200;
+
+}
+
+.badge-rounded {
+  border-radius: 9999px;
+}
+.border-0{
+    border-color: transparent !important;
+}
+
+</style>

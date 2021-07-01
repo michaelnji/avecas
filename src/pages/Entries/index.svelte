@@ -2,7 +2,7 @@
     import { isActive } from "@roxi/routify";
     import HomeTodoEntries from "./../../_components/sections/HomeTodoEntries.svelte";
     import EmptyNotification from "./../../_components/EmptyNotification.svelte";
-    import { fade } from "svelte/transition";
+    import { fly } from "svelte/transition";
     import HomeEntries from "./../../_components/sections/HomeEntries.svelte";
     import Empty from "./../../_components/Empty.svelte";
     import Editor from "./../../_components/Editor.svelte";
@@ -49,10 +49,10 @@
     >
         Todos
     </div>
-</div>
+</div> 
 {#if activeTab == 0}
     {#if Entries && Entries.length == 0}
-        <div out:fade class="w-full h-full fixed md:relative top-44 md:top-10">
+        <div in:fly={{x:-500, duration:1000}} out:fly={{x:500, duration:500}} class="w-full h-full fixed md:relative top-44 md:top-10">
             <h1
                 class="text-3xl font-extrabold text-center text-opacity-10 mb-12"
             >
@@ -63,12 +63,12 @@
             </div>
         </div>
     {:else if Entries}
-        <div class="mb-12" out:fade><HomeEntries entries={Entries} /></div>
+        <div class="mb-12" in:fly={{x:-500, duration:1000}} out:fly={{x:500, duration:500}}><HomeEntries entries={Entries} /></div>
     {:else}
         <br />
     {/if}
 {:else if Todos && Todos.length == 0}
-    <div out:fade class="w-full h-full fixed md:relative top-44 md:top-10">
+    <div in:fly={{x:-500, duration:1000}} out:fly={{x:500, duration:500}} class="w-full h-full fixed md:relative top-44 md:top-10">
         <h1 class="text-3xl font-extrabold text-center text-opacity-10 mb-12">
             No tasks for the moment❤️
         </h1>
@@ -78,7 +78,7 @@
     </div>
 {:else if Todos}
     {#if $isActive("/Entries")}
-        <div class="mb-12" out:fade><HomeTodoEntries todos={Todos} /></div>{/if}
+        <div class="mb-12" in:fly={{x:-500, duration:1000}} out:fly={{x:500, duration:500}}><HomeTodoEntries todos={Todos} /></div>{/if}
 {:else}
     <br />
 {/if}

@@ -1,7 +1,7 @@
 <script>
     export let type, closable, actions, successAction;
     let classType = type
-        ? " my-7 w-11/12 mx-auto transition-all duration-300 ease-linear fixed top-20 z-50 alert alert-" +
+        ? " my-7 w-11/12 mx-auto transition-all duration-300 ease-linear   z-50 alert alert-" +
           type
         : " my-7 w-11/12 mx-auto transition-all duration-300 ease-linear alert alert-primary";
     const closeAlert = () => {
@@ -74,7 +74,7 @@
     {#if closable}
         <div class="flex-none">
             <button
-                class={"btn btn-sm  btn-circle mr-2 btn-" + type}
+                class="btn btn-sm  btn-circle mr-2 btn-ghost"
                 on:click={closeAlert}
             >
                 <svg
@@ -103,3 +103,21 @@
         </div>
     {/if}
 </div>
+
+<style>
+    .alert-error {
+        @apply bg-error text-base-content;
+    }
+    .alert-success {
+        @apply bg-success text-base-content;
+    }
+    .alert-warning {
+        @apply bg-warning text-neutral;
+    }
+    .alert-info {
+        @apply bg-info text-base-content;
+    }
+    .alert-accent {
+        @apply bg-accent text-base-content;
+    }
+</style>

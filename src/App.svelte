@@ -1,12 +1,15 @@
 <script>
+	import Serviceworker from './Serviceworker.svelte';
     import { Router } from "@roxi/routify";
     import { routes } from "../.routify/routes";
     import Notifications from "svelte-notifications";
-    import Serviceworker from "./Serviceworker.svelte";
+
 </script>
 
 <Notifications>
-    <div class="overflow-hidden"><Router {routes} /></div>
+    <div id='main' class="overflow-hidden">
+       
+        <Router {routes} /></div>
 </Notifications>
 <Serviceworker />
 
@@ -14,14 +17,29 @@
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
-
-    ::-webkit-scrollbar {
-        background: transparent;
+/* body{
+    overflow-y: hidden ;
+} */
+     ::-webkit-scrollbar {
+        background: transparent !important;
+        width: 10px !important;
+        position: fixed;
     }
-    ::-webkit-scrollbar-thumb {
-        @apply bg-accent rounded-full h-12 w-4;
+     ::-webkit-scrollbar-button {
+        background: transparent !important;
+        width: 0 !important;
     }
-    ::-webkit-scrollbar-track {
-        @apply bg-transparent;
+     ::-webkit-scrollbar-track {
+         background: rgba(65, 100, 255, 0) !important;
+       opacity: 0 !important; 
+        /* width: 0 !important; */
+        width: 100%;
+       
     }
+    
+     ::-webkit-scrollbar-thumb {
+        @apply bg-primary;
+        width: 100% !important;
+    }
+   
 </style>

@@ -228,6 +228,18 @@
                                     <li>
                                         <button
                                             class="btn btn-ghost"
+                                            on:click={changeMood}>👀</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
+                                            on:click={changeMood}>😱</button
+                                        >
+                                    </li>
+                                    <li>
+                                        <button
+                                            class="btn btn-ghost"
                                             on:click={changeMood}>💩</button
                                         >
                                     </li>

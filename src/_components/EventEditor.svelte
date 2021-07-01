@@ -1,6 +1,6 @@
 <script>
     import DatePicker from "./datePicker.svelte";
-    import { fade } from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
     import timeFunctions from "../scripts/timeFunctions";
     import Icon from "./icon.svelte";
 
@@ -16,16 +16,16 @@
 
 <div
     class="tooltip tooltip-right fixed bottom-14 left-5 z-10"
-    data-tip="add new event"
+    data-tip="add new event"  
 >
-    <button
+    <button transition:fly
         class="btn btn-primary shadow-lg btn-lg btn-circle hover:rotate-45 transform"
         on:click={openEditor}><Icon name="zap" /></button
     >
 </div>
 {#if closedClass}
     <div
-        class="w-screen min-h-screen hero-overlay overflow-scroll fixed top-0 grid place-items-center z-50 mb-28"
+        class="w-screen h-screen hero-overlay left-0 fixed top-0 overflow-scroll grid place-items-center z-50 "
         transition:fade
     >
         <div
@@ -107,10 +107,10 @@
 {/if}
 
 <style lang="scss">
-    @use '../static/css/theme.scss';
-    .date-picker {
-        @apply bg-base-100;
-        --tw-bg-opacity: 1;
-        $textfield-bg: transparent;
-    }
+    // @use '../static/css/theme.scss';
+    // .date-picker {
+    //     @apply bg-base-100;
+    //     --tw-bg-opacity: 1;
+    //     $textfield-bg: transparent;
+    // }
 </style>

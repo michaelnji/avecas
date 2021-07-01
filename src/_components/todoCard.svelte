@@ -1,4 +1,5 @@
 <script>
+    import TodoModal from "./TodoModal.svelte";
     import { onDestroy, onMount } from "svelte";
     import todos from "../store/todos";
     import Badge from "./badge.svelte";
@@ -7,16 +8,12 @@
     import { getNotificationsContext } from "svelte-notifications";
     const { addNotification } = getNotificationsContext();
     export let tags, todo, priority, isChecked, dueBefore, id;
-    let priorityClass, Todos, todoUnsubscribe, currentTodo;
+    let priorityClass, Todos, todoUnsubscribe, current_todo;
     todoUnsubscribe = todos.subscribe((value) => {
         Todos = value;
     });
     dbManager;
-    // onMount(() => {
-    //     todos.update((value) => {
-    //         return dbManager.getItemValue("AVECAS_TODOS");
-    //     });
-    // });
+
     onDestroy(() => {
         todoUnsubscribe;
     });
@@ -25,10 +22,10 @@
         todos.update((value) => {
             return dbManager.getItemValue("AVECAS_TODOS");
         });
-        currentTodo = Todos;
+        current_todo = Todos;
         let val = [];
-        if (currentTodo.length > 1) {
-            currentTodo.forEach((el) => {
+        if (current_todo.length > 1) {
+            current_todo.forEach((el) => {
                 if (el.id == id) {
                     el.isChecked = !el.isChecked;
                 }
@@ -60,14 +57,24 @@
     }
 </script>
 
-<div class="card shadow bg-base-100 m-3 p-4 " on:click={checkTodo} out:fade>
-    <div class="form-control">
-        <label class="cursor-pointer label mr-3" for={todo}>
-            <h3 class={"text-2xl sm:text-xl font-bold mr-2 " + priorityClass}>
+<div
+    class="card shadow bg-base-100 m-3 p-4  overflow-visible shadow-md"
+    on:click|self={checkTodo}
+    out:fade
+>
+    <div><TodoModal {id} /></div>
+    <div class="form-control" on:click={checkTodo}>
+        <label
+            class="cursor-pointer label mr-3"
+            for={todo}
+            on:click={checkTodo}
+        >
+            <h3 class={"text-xl  font-bold mr-2 " + priorityClass}>
                 {todo}
             </h3>
-            <div>
+            <div on:click={checkTodo}>
                 <input
+                    on:click={checkTodo}
                     name={todo}
                     type="checkbox"
                     bind:checked={isChecked}
@@ -79,7 +86,10 @@
     </div>
 
     {#if tags}
-        <div class="w-full mt-4 flex-wrap  flex justify-start items-center">
+        <div
+            class="w-full mt-4 flex-wrap  flex justify-start items-center"
+            on:click={checkTodo}
+        >
             {#each tags as tag}
                 <Badge type={tag.type || "info"} inButton>
                     {tag.text}
