@@ -1,5 +1,6 @@
 <script>
-    export let name, config;
+    export let name,
+        config = "";
     let configClass = config ? config : "h-6 w-6 mx-2";
 </script>
 
