@@ -130,12 +130,6 @@
                     on:click={openTodoEditor}>edit</button
                 >
             </li>
-            <li>
-                <button
-                    class="w-full hover:text-primary btn btn-ghost"
-                    on:click={deleteTodo}>delete</button
-                >
-            </li>
         </ul>
     </div>
 </div>

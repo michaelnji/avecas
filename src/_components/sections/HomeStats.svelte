@@ -16,18 +16,28 @@
 </script>
 
 <div
-    class="stats  border w-full overflow-hidden grid-flow-row lg:grid-flow-col"
+    id="h"
+    class="  bg-base-100  border w-full flex   max-w-full overflow-x-scroll"
 >
-    <div class="stat place-items-center place-content-center">
-        <div class="stat-title ">Total tasks completed</div>
+    <div class="stat  ">
+        <div class="stat-title ">Assigned tasks</div>
         <div class="stat-value ">{Todos.length}</div>
     </div>
-    <div class="stat place-items-center place-content-center">
+    <div class="stat  ">
         <div class="stat-title ">Total Entries</div>
         <div class="stat-value ">{Entries.length}</div>
     </div>
-    <div class="stat place-items-center place-content-center">
+    <div class="stat  ">
         <div class="stat-title ">Moods</div>
         <div class="stat-value ">80</div>
     </div>
 </div>
+
+<style lang="scss">
+    #h {
+        flex-direction: row;
+        @media screen and (max-width: 1250px) {
+            flex-direction: column !important;
+        }
+    }
+</style>

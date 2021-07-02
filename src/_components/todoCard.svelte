@@ -8,13 +8,17 @@
     import { getNotificationsContext } from "svelte-notifications";
     const { addNotification } = getNotificationsContext();
     export let tags, todo, priority, isChecked, dueBefore, id;
-    let priorityClass, Todos, todoUnsubscribe, current_todo;
+    let priorityClass, Todos, todoUnsubscribe, current_todo, isShow;
     todoUnsubscribe = todos.subscribe((value) => {
         Todos = value;
     });
     dbManager;
-
+    onMount(() => {
+        isShow = true;
+    });
     onDestroy(() => {
+        isShow = false;
+
         todoUnsubscribe;
     });
 
@@ -26,10 +30,9 @@
         let val = [];
         if (current_todo.length > 1) {
             current_todo.forEach((el) => {
-                if (el.id == id) {
+                if (el.id === id) {
                     el.isChecked = !el.isChecked;
-                }
-                if (el.id !== id) {
+                } else if (el.id !== id) {
                     val.push(el);
                 }
             });
@@ -57,53 +60,36 @@
     }
 </script>
 
-<div
-    class="card shadow bg-base-100 m-3 p-4  overflow-visible shadow-md"
-    on:click|self={checkTodo}
-    out:fade
->
-    <div><TodoModal {id} /></div>
-    <div class="form-control" on:click={checkTodo}>
-        <label
-            class="cursor-pointer label mr-3"
-            for={todo}
-            on:click={checkTodo}
-        >
-            <h3 class={"text-xl  font-bold mr-2 " + priorityClass}>
-                {todo}
-            </h3>
-            <div on:click={checkTodo}>
-                <input
-                    on:click={checkTodo}
-                    name={todo}
-                    type="checkbox"
-                    bind:checked={isChecked}
-                    class="checkbox"
-                />
-                <span class="checkbox-mark" />
-            </div>
-        </label>
-    </div>
-
-    {#if tags}
-        <div
-            class="w-full mt-4 flex-wrap  flex justify-start items-center"
-            on:click={checkTodo}
-        >
-            {#each tags as tag}
-                <Badge type={tag.type || "info"} inButton>
-                    {tag.text}
-                </Badge>
-            {/each}
+<div class="card m-3 bg-base-100 pb-4   overflow-visible shadow-xl ">
+    <div class="m-4 max-w-max"><TodoModal {id} /></div>
+    <div class=" cursor-pointer p-4 w-full" on:click|once={checkTodo} out:fade>
+        <div class="form-control w-full">
+            <label class=" label mr-3 cursor-pointer max-w-1/12" for={todo}>
+                <h3 class={"text-xl  font-bold  " + priorityClass}>
+                    {todo}
+                </h3>
+            </label>
         </div>
-    {/if}
-    {#if dueBefore}
-        <p class="date pt-8">
-            DUE: <span class="ml-2 text-accent font-semibold capitalize"
-                >{dueBefore}</span
+
+        {#if tags}
+            <div
+                class="w-full mt-4 flex-wrap px-4 pb-3  flex justify-start items-center"
             >
-        </p>
-    {/if}
+                {#each tags as tag}
+                    <Badge type={tag.type || "info"} inButton>
+                        {tag.text}
+                    </Badge>
+                {/each}
+            </div>
+        {/if}
+        {#if dueBefore}
+            <p class="date pt-6 px-4">
+                DUE: <span class="ml-2 text-accent font-semibold capitalize"
+                    >{dueBefore}</span
+                >
+            </p>
+        {/if}
+    </div>
 </div>
 
 <style>

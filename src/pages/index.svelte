@@ -11,7 +11,7 @@
     import SimpleCard from "../_components/simpleCard.svelte";
     import { fade, fly } from "svelte/transition";
     import { flip } from "svelte/animate";
-    let Entries, recentEntries, unsubscribe, todoUnsubscribe, Todos;
+    let Entries, recentEntries, unsubscribe, todoUnsubscribe, Todos, isShow;
     unsubscribe = entries.subscribe((value) => {
         Entries = value;
     });
@@ -27,9 +27,11 @@
         todos.update((value) => {
             return dbManager.getOrSetItem("AVECAS_TODOS", []);
         });
+        isShow = true;
     });
 
     onDestroy(() => {
+        isShow = false;
         unsubscribe;
         todoUnsubscribe;
     });
@@ -82,7 +84,7 @@
                 {/if}
             </div>
             <div class="w-full md:w-11/12 md:mx-auto lg:w-5/12 my-12 lg:my-0">
-                <div class="mb-7">
+                <!-- <div class="mb-7">
                     <h1 class="font-extrabold text-4xl mb-3">
                         TODOS {#if Todos}
                             <Badge size="md" type="info" closable={false}
@@ -91,10 +93,11 @@
                             >
                         {/if}
                     </h1>
+
                     {#if Todos}
                         <HomeTodoEntries todos={Todos} />
                     {/if}
-                </div>
+                </div> -->
                 <div>
                     <h1 class="font-extrabold text-4xl mb-3">Stats</h1>
                     <HomeStats />
@@ -102,6 +105,4 @@
             </div>
         </div>
     </main>
-{:else}
-    <br />
 {/if}
