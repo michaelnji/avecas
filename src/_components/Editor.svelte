@@ -25,6 +25,8 @@
         title,
         desc,
         todoDate,
+        todoPlaceholder,
+        entryPlaceholder,
         todo,
         todoImportance,
         todoTags,
@@ -98,15 +100,17 @@
         });
 
         dbM.setItemValue("AVECAS_ENTRIES", Entries);
-        // dbM.getOrSetItem("AVECAS_TOTAL_ENTRIES", Entries.length);
-        title, desc, (tags = "");
+        entryPlaceholder = title;
+        title = "";
+        desc = "";
+        tags = "";
 
         closeEditor();
         addNotification({
-            text: "Entry Added",
+            text: "Entry Added successfully",
             position: "bottom-right",
             type: "success",
-            removeAfter: 2000,
+            removeAfter: 2200,
         });
     }
     function addTodo() {
@@ -114,22 +118,23 @@
             showMsg("warning", " Error, please fill in th todo field", "2000");
             return;
         }
-        uniq_id = uuidv4();
+
         todos.update((value) => {
             return [
-                ...Todos,
                 {
                     date: todoDate,
                     todo: todo,
                     tags: todoTags ? tp.formatTags(todoTags) : false,
                     priority: todoPriority ? todoPriority : "",
                     isChecked: false,
-                    id: uniq_id,
+                    id: uuidv4(),
                 },
+                ...Todos,
             ];
         });
 
         dbM.setItemValue("AVECAS_TODOS", Todos);
+        todoPlaceholder = todo;
         todo = "";
         todoTags = "";
         todoDate = "";
@@ -224,7 +229,9 @@
                             </label>
                             <input
                                 bind:value={title}
-                                placeholder="Happy Day "
+                                placeholder={entryPlaceholder
+                                    ? entryPlaceholder
+                                    : "Happy Day "}
                                 class="input input-bordered"
                                 type="text"
                             />
@@ -374,7 +381,9 @@
                                     >
                                 </label>
                                 <input
-                                    placeholder="Clean Windows of basement"
+                                    placeholder={todoPlaceholder
+                                        ? todoPlaceholder
+                                        : "Clean Windows of basement"}
                                     bind:value={todo}
                                     class="input input-bordered"
                                     type="text"
